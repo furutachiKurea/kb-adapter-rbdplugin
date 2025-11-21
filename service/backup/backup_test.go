@@ -183,7 +183,7 @@ func TestReScheduleBackup(t *testing.T) {
 			},
 		},
 		{
-			name: "disable_backup_by_setting_empty_repo",
+			name: "disable_backup_by_setting_backup_false",
 			request: model.BackupScheduleInput{
 				ClusterBackup: model.ClusterBackup{
 					BackupRepo: "",
@@ -208,7 +208,7 @@ func TestReScheduleBackup(t *testing.T) {
 			expectErr: false,
 			validate: func(t *testing.T, client client.Client) {
 				cluster := getClusterByServiceID(t, client, testutil.TestServiceID)
-				require.Nil(t, cluster.Spec.Backup)
+				require.False(t, *cluster.Spec.Backup.Enabled)
 			},
 		},
 		{

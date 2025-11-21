@@ -12,6 +12,7 @@ import (
 	kbappsv1 "github.com/apecloud/kubeblocks/apis/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/utils/ptr"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/stretchr/testify/assert"
@@ -263,6 +264,7 @@ func TestGetClusterDetail(t *testing.T) {
 			name: "invalid_backup_cron_expression",
 			setupClient: func() client.Client {
 				backup := &kbappsv1.ClusterBackup{
+					Enabled:         ptr.To(true),
 					CronExpression:  "invalid-cron",
 					RetentionPeriod: "7d",
 					RepoName:        "test-repo",
