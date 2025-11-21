@@ -9,11 +9,11 @@ import (
 	"github.com/furutachiKurea/kb-adapter-rbdplugin/service/adapter"
 )
 
-var _ adapter.ClusterBuilder = &RabbitMQ{}
-
 type RabbitMQ struct {
 	Builder
 }
+
+var _ adapter.ClusterBuilder = &RabbitMQ{}
 
 func (r *RabbitMQ) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
 	cluster, err := r.Builder.BuildCluster(input)

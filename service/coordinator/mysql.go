@@ -11,12 +11,12 @@ import (
 	"gopkg.in/ini.v1"
 )
 
-var _ adapter.Coordinator = &MySQL{}
-
 // MySQL 实现 Coordinator 接口
 type MySQL struct {
 	Coordinator
 }
+
+var _ adapter.Coordinator = &MySQL{}
 
 func (c *MySQL) TargetPort() int {
 	return 3306

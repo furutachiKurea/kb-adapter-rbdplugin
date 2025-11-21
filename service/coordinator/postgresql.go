@@ -9,12 +9,12 @@ import (
 	"github.com/furutachiKurea/kb-adapter-rbdplugin/service/adapter"
 )
 
-var _ adapter.Coordinator = &PostgreSQL{}
-
 // PostgreSQL 实现 Coordinator 接口
 type PostgreSQL struct {
 	Coordinator
 }
+
+var _ adapter.Coordinator = &PostgreSQL{}
 
 func (c *PostgreSQL) TargetPort() int {
 	return 6432

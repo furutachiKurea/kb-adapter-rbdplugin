@@ -10,10 +10,11 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-var _ adapter.Coordinator = &Redis{}
-
 type Redis struct {
+	Coordinator
 }
+
+var _ adapter.Coordinator = &Redis{}
 
 func (r *Redis) TargetPort() int {
 	return 6379

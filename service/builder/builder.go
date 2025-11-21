@@ -17,10 +17,10 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-var _ adapter.ClusterBuilder = &Builder{}
-
 // Builder 实现 ClusterBuilder 接口，所有的 Builder 都应基于 Builder 实现
 type Builder struct{}
+
+var _ adapter.ClusterBuilder = &Builder{}
 
 // generateShortName 生成基于哈希的短名称，确保唯一性且长度可控
 // 格式：{originalName}-{hash4}，其中 hash4 是 MD5 哈希的前4位十六进制字符

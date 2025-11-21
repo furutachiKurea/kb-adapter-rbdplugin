@@ -10,12 +10,12 @@ import (
 	kbappsv1 "github.com/apecloud/kubeblocks/apis/apps/v1"
 )
 
-var _ adapter.ClusterBuilder = &MySQL{}
-
 // MySQL 实现 MySQL 的 Builder
 type MySQL struct {
 	Builder
 }
+
+var _ adapter.ClusterBuilder = &MySQL{}
 
 func (b *MySQL) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
 	cluster, err := b.Builder.BuildCluster(input)

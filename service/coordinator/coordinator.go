@@ -12,11 +12,10 @@ import (
 	"github.com/furutachiKurea/kb-adapter-rbdplugin/service/adapter"
 )
 
-var _ adapter.Coordinator = &Coordinator{}
-
 // Coordinator 实现 Coordinator 接口，所有的 Coordinator 都应基于 Coordinator 实现
-type Coordinator struct {
-}
+type Coordinator struct{}
+
+var _ adapter.Coordinator = &Coordinator{}
 
 func (c *Coordinator) TargetPort() int {
 	return -1

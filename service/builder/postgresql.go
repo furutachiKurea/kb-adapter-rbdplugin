@@ -10,12 +10,12 @@ import (
 	kbappsv1 "github.com/apecloud/kubeblocks/apis/apps/v1"
 )
 
-var _ adapter.ClusterBuilder = &PostgreSQL{}
-
 // PostgreSQL 实现 PostgreSQL 的 Builder
 type PostgreSQL struct {
 	Builder
 }
+
+var _ adapter.ClusterBuilder = &PostgreSQL{}
 
 func (b *PostgreSQL) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
 	cluster, err := b.Builder.BuildCluster(input)

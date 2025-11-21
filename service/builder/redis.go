@@ -10,12 +10,12 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-var _ adapter.ClusterBuilder = &Redis{}
-
 // Redis 实现 replication Redis cluster
 type Redis struct {
 	Builder
 }
+
+var _ adapter.ClusterBuilder = &Redis{}
 
 func (r *Redis) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
 	cluster, err := r.Builder.BuildCluster(input)

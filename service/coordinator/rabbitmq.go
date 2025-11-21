@@ -6,8 +6,6 @@ import (
 	"github.com/furutachiKurea/kb-adapter-rbdplugin/service/adapter"
 )
 
-var _ adapter.Coordinator = &RabbitMQ{}
-
 // RabbitMQ 实现 RabbitMQ 的 Coordinator
 //
 // - 不支持备份功能
@@ -16,6 +14,8 @@ var _ adapter.Coordinator = &RabbitMQ{}
 type RabbitMQ struct {
 	Coordinator
 }
+
+var _ adapter.Coordinator = &RabbitMQ{}
 
 func (r *RabbitMQ) TargetPort() int {
 	return 5672
