@@ -17,10 +17,10 @@ type RabbitMQ struct {
 
 var _ adapter.Coordinator = &RabbitMQ{}
 
-func (r *RabbitMQ) TargetPort() int {
+func (c *RabbitMQ) TargetPort() int {
 	return 5672
 }
 
-func (r *RabbitMQ) GetSecretName(clusterName string) string {
+func (c *RabbitMQ) GetSecretName(clusterName string) string {
 	return fmt.Sprintf("%s-rabbitmq-account-root", clusterName)
 }

@@ -17,8 +17,8 @@ type Redis struct {
 
 var _ adapter.ClusterBuilder = &Redis{}
 
-func (r *Redis) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
-	cluster, err := r.Builder.BuildCluster(input)
+func (b *Redis) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
+	cluster, err := b.Builder.BuildCluster(input)
 	if err != nil {
 		return nil, err
 	}

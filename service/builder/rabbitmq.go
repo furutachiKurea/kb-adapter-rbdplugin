@@ -15,8 +15,8 @@ type RabbitMQ struct {
 
 var _ adapter.ClusterBuilder = &RabbitMQ{}
 
-func (r *RabbitMQ) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
-	cluster, err := r.Builder.BuildCluster(input)
+func (b *RabbitMQ) BuildCluster(input model.ClusterInput) (*kbappsv1.Cluster, error) {
+	cluster, err := b.Builder.BuildCluster(input)
 	if err != nil {
 		return nil, fmt.Errorf("build base cluster: %w", err)
 	}
