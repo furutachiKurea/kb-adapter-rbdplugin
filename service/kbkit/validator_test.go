@@ -85,7 +85,7 @@ func TestParameterValidator_Validate_ParameterWithoutSchema(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			validator := NewParameterValidator(tt.constraints)
+			validator := NewParameterValidator(tt.constraints, false)
 			err := validator.Validate(tt.entry)
 
 			if tt.expectError {
@@ -131,7 +131,7 @@ func TestParameterValidator_Validate_MixedParameters(t *testing.T) {
 		},
 	}
 
-	validator := NewParameterValidator(constraints)
+	validator := NewParameterValidator(constraints, false)
 
 	tests := []struct {
 		name        string

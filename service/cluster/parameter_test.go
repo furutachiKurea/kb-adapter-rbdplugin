@@ -214,6 +214,31 @@ func TestMergeEntriesAndConstraints(t *testing.T) {
 			},
 			description: "原生Go类型推断和边界情况：int、float、bool原生类型，以及无效值的处理",
 		},
+		{
+			name: "direct_return_if_constraints_nil",
+			entries: []model.ParameterEntry{
+				testutil.NewParameterEntry("any_param", "some_value"),
+				testutil.NewParameterEntry("int_param", 123),
+			},
+			constraints: nil,
+			expected: []model.Parameter{
+				{
+					ParameterEntry: testutil.NewParameterEntry("any_param", "some_value"),
+					Type:           model.ParameterTypeString,
+					Description:    "Auto-detected parameter",
+					IsDynamic:      false,
+					IsRequired:     false,
+				},
+				{
+					ParameterEntry: testutil.NewParameterEntry("int_param", 123),
+					Type:           model.ParameterTypeInteger,
+					Description:    "Auto-detected parameter",
+					IsDynamic:      false,
+					IsRequired:     false,
+				},
+			},
+			description: "当 constraints 为 nil 时，应直接返回所有参数并推断类型",
+		},
 	}
 
 	for _, tt := range tests {

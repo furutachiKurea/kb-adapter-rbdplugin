@@ -9,19 +9,25 @@ import (
 	"github.com/furutachiKurea/kb-adapter-rbdplugin/internal/model"
 )
 
-// ParameterValidator 参数验证器
+// ParameterValidator 参数验证器，
 // 负责集中处理参数验证逻辑，支持类型校验、范围校验、枚举校验等
+//
+// 当启用宽容模式时，当参数不存在于 constraints 中时，会直接通过验证
 type ParameterValidator struct {
-	constraints map[string]model.Parameter
+	constraints    map[string]model.Parameter
+	permissiveMode bool
 }
 
 // NewParameterValidator -
-func NewParameterValidator(constraints []model.Parameter) *ParameterValidator {
+func NewParameterValidator(constraints []model.Parameter, permissiveMode bool) *ParameterValidator {
 	constraintMap := make(map[string]model.Parameter, len(constraints))
 	for _, param := range constraints {
 		constraintMap[param.Name] = param
 	}
-	return &ParameterValidator{constraints: constraintMap}
+	return &ParameterValidator{
+		constraints:    constraintMap,
+		permissiveMode: permissiveMode,
+	}
 }
 
 // Validate 验证单个参数变更请求
@@ -30,6 +36,10 @@ func (v *ParameterValidator) Validate(entry model.ParameterEntry) *ParameterVali
 	// 检查参数是否存在
 	constraint, exists := v.constraints[entry.Name]
 	if !exists {
+		if v.permissiveMode {
+			return nil
+		}
+
 		log.Error("parameter not Exist", log.String("parameter_name", entry.Name), log.Any("constraints", v.constraints[entry.Name]))
 		return &ParameterValidationError{
 			ParameterName: entry.Name,

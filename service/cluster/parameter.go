@@ -124,7 +124,8 @@ func (s *Service) ChangeClusterParameter(
 	}
 
 	// 创建参数验证器
-	validator := kbkit.NewParameterValidator(constraintList)
+	// 如果没有约束（constraints == nil），则使用宽容模式（permissiveMode=true）
+	validator := kbkit.NewParameterValidator(constraintList, constraints == nil)
 
 	paramCount := len(req.Parameters)
 	applied := make([]string, 0, paramCount)                        // 成功应用的参数名称列表
@@ -198,6 +199,11 @@ func (s *Service) getParameterConstraints(
 	renderer, err := s.findParamConfigRenderer(ctx, compDef)
 	if err != nil {
 		return nil, fmt.Errorf("find param config renderer: %w", err)
+	}
+
+	// 检查是否有参数定义
+	if len(renderer.Spec.ParametersDefs) == 0 {
+		return nil, nil
 	}
 
 	paramDefs, err := s.getParameterDefinitions(ctx, renderer)
@@ -518,13 +524,29 @@ func createParameterSets(spec *v1alpha1.ParametersDefinitionSpec) *model.Paramet
 }
 
 // mergeEntriesAndConstraints 合并 ParameterEntry 与 Parameter
-// 仅返回 entries 与 constraints 的交集：
-// - 如果某个 entry 未在 constraints 中出现，则跳过
+// 如果 constraints 为 nil (没有提供 ParametersDefinition)，则返回所有 entry
+// 否则仅返回 entries 与 constraints 的交集
 func mergeEntriesAndConstraints(
 	entries []model.ParameterEntry,
 	constraints map[string]model.Parameter,
 ) []model.Parameter {
 	parameters := make([]model.Parameter, 0, len(entries))
+
+	// 没有 ParametersDefinition：直接转换所有 entry
+	if constraints == nil {
+		for _, e := range entries {
+			param := model.Parameter{
+				ParameterEntry: e,
+				Type:           inferParameterType(e.Value),
+				Description:    "Auto-detected parameter",
+				IsDynamic:      false,
+				IsRequired:     false,
+			}
+			parameters = append(parameters, param)
+		}
+		return parameters
+	}
+
 	for _, e := range entries {
 		constraint, ok := constraints[e.Name]
 		if !ok {
