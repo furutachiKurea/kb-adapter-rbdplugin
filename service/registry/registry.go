@@ -13,6 +13,7 @@ var Cluster = map[string]adapter.ClusterAdapter{
 	"mysql":      _mysql,
 	"redis":      _redis,
 	"rabbitmq":   _rabbitmq,
+	"mongodb":    _mongodb,
 	// ... new types here
 }
 
@@ -34,6 +35,13 @@ var (
 	_rabbitmq = adapter.ClusterAdapter{
 		Builder:     &builder.RabbitMQ{},
 		Coordinator: &coordinator.RabbitMQ{},
+	}
+	// TODO Rainbond 目前不支持为组件创建多个同端口的 service，
+	// 因此无法做到为 MongoDB 分别创建用于读写（主）和只读（从）的 service，
+	// Rainbond 只提供主节点访问的 service
+	_mongodb = adapter.ClusterAdapter{
+		Builder:     &builder.MongoDB{},
+		Coordinator: &coordinator.MongoDB{},
 	}
 )
 
