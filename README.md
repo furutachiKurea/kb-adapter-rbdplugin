@@ -1,9 +1,23 @@
-# [Kubeblock Adapter for Rainbond Plugin](https://github.com/furutachiKurea/kb-adapter-rbdplugin)(原 Block Mechanica)
-
+# [OSPP 2025 项目] [Kubeblock Adapter for Rainbond Plugin](https://github.com/furutachiKurea/kb-adapter-rbdplugin)(原 Block Mechanica)
+ 
 > 本项目原名为 "Block Mechanica"，现已更名为 "Kubeblock Adapter for Rainbond Plugin"，
 > 后续项目中两个名称也许会共存，应认为其等价
 
 Kubeblock Adapter for Rainbond Plugin <del>Block Mechanica</del> 是一个轻量化的 Kubernetes 服务，通过使用 Echo 编写的 API 服务实现 KubeBlocks 与 Rainbond 的集成
+
+## PR
+
+本仓库代码已通过下列 PR 合入:
+
+- <https://github.com/goodrain/rainbond/pull/2305>
+- <https://github.com/goodrain/rainbond/pull/2307>
+
+其他相关 PR:
+
+- <https://github.com/goodrain/rainbond-ui/pull/1579>
+- <https://github.com/goodrain/rainbond-ui/pull/1611>
+- <https://github.com/goodrain/rainbond-ui/pull/1610>
+- <https://github.com/goodrain/rainbond-console/pull/1727>
 
 ## How does it work?
 
